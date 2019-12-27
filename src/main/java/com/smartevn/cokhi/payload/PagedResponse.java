@@ -2,6 +2,12 @@ package com.smartevn.cokhi.payload;
 
 import java.util.List;
 
+/**
+ * 
+ * @author vadinh
+ *
+ * @param <T>
+ */
 public class PagedResponse<T> {
 
     private List<T> content;

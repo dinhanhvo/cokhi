@@ -32,7 +32,9 @@ import java.net.URI;
 import java.util.Collections;
 
 /**
- * Created by rajeevkumarsingh on 02/08/17.
+ * 
+ * @author vadinh
+ *
  */
 @RestController
 @RequestMapping("/api/auth")

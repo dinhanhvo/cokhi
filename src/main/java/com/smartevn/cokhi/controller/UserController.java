@@ -19,21 +19,17 @@ import com.smartevn.cokhi.repository.UserRepository;
 import com.smartevn.cokhi.security.CurrentUser;
 import com.smartevn.cokhi.security.UserPrincipal;
 
+/**
+ * 
+ * @author vadinh
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-//    @Autowired
-//    private PollRepository pollRepository;
-
-//    @Autowired
-//    private VoteRepository voteRepository;
-
-//    @Autowired
-//    private PollService pollService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 

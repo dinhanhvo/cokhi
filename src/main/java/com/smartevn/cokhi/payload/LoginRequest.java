@@ -3,7 +3,9 @@ package com.smartevn.cokhi.payload;
 import javax.validation.constraints.NotBlank;
 
 /**
- * Created by rajeevkumarsingh on 02/08/17.
+ * 
+ * @author vadinh
+ *
  */
 public class LoginRequest {
     @NotBlank
@@ -11,7 +13,9 @@ public class LoginRequest {
 
     @NotBlank
     private String password;
-
+    
+    private String language;
+    
     public String getUsernameOrEmail() {
         return usernameOrEmail;
     }
@@ -26,5 +30,13 @@ public class LoginRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

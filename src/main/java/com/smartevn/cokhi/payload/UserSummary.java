@@ -1,5 +1,10 @@
 package com.smartevn.cokhi.payload;
 
+/**
+ * 
+ * @author vadinh
+ *
+ */
 public class UserSummary {
     private Long id;
     private String username;

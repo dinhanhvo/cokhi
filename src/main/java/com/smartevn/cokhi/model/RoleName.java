@@ -1,7 +1,7 @@
 package com.smartevn.cokhi.model;
 
 /**
- * Created by rajeevkumarsingh on 07/12/17.
+ * Created by voda on 01/01/2020.
  */
 public enum  RoleName {
     ROLE_USER,

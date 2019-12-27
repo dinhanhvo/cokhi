@@ -12,6 +12,11 @@ import com.smartevn.cokhi.security.UserPrincipal;
 
 import java.util.Optional;
 
+/**
+ * 
+ * @author vadinh
+ *
+ */
 @Configuration
 @EnableJpaAuditing
 public class AuditingConfig {

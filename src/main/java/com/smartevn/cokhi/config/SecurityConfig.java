@@ -20,11 +20,11 @@ import com.smartevn.cokhi.security.CustomUserDetailsService;
 import com.smartevn.cokhi.security.JwtAuthenticationEntryPoint;
 import com.smartevn.cokhi.security.JwtAuthenticationFilter;
 
-
 /**
- * Created by rajeevkumarsingh on 01/08/17.
+ * 
+ * @author vadinh
+ *
  */
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -87,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                         .permitAll()
-                    .antMatchers("/api/auth/**")
+                    .antMatchers("/api/**")
                         .permitAll()
                     .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                         .permitAll()

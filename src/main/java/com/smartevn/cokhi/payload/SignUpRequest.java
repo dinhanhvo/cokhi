@@ -3,7 +3,9 @@ package com.smartevn.cokhi.payload;
 import javax.validation.constraints.*;
 
 /**
- * Created by rajeevkumarsingh on 02/08/17.
+ * 
+ * @author vadinh
+ *
  */
 
 public class SignUpRequest {

@@ -2,6 +2,11 @@ package com.smartevn.cokhi.payload;
 
 import java.time.Instant;
 
+/**
+ * 
+ * @author vadinh
+ *
+ */
 public class UserProfile {
     private Long id;
     private String username;

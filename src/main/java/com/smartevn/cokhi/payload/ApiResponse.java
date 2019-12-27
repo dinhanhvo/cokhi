@@ -1,7 +1,9 @@
 package com.smartevn.cokhi.payload;
 
 /**
- * Created by rajeevkumarsingh on 19/08/17.
+ * 
+ * @author vadinh
+ *
  */
 public class ApiResponse {
     private Boolean success;
