@@ -3,14 +3,9 @@ package com.smartevn.cokhi.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.smartevn.cokhi.model.ItemModel;
+import com.smartevn.cokhi.model.Product;
 
-/**
- * 
- * @author vadinh
- *
- */
-//@Repository
-public interface ItemRepository {
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
 }

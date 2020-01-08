@@ -1,5 +1,7 @@
 package com.smartevn.cokhi;
 
+import java.util.Map;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -27,6 +29,9 @@ public class CokhiApplication extends SpringBootServletInitializer  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CokhiApplication.class, args);
+		
+//		Map<String, String> env = System.getenv();
+//		System.out.println("CokhiApplication.main()=====" + env);
 	}
 
 }

@@ -1,0 +1,2 @@
+/home/ninhnn/webtemplates/8083/ad-dashboard/assets/assets/images/products/
+http://smartevn.com:8083/ad-dashboard/assets/assets/images/products/

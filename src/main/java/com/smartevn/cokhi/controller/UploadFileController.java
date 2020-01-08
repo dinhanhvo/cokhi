@@ -1,5 +1,7 @@
 package com.smartevn.cokhi.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.smartevn.cokhi.model.ApiResp;
+
 /**
  * 
  * @author vadinh
@@ -26,30 +30,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadFileController {
 
     private static final Logger logger = LoggerFactory.getLogger(UploadFileController.class);
-
-    @GetMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
-        logger.info("==============================GET upload file==================");
-        if (file == null) {
-            throw new RuntimeException("You must select the a file for uploading");
-        }
-        InputStream inputStream = file.getInputStream();
-        String originalName = file.getOriginalFilename();
-        String name = file.getName();
-        String contentType = file.getContentType();
-        long size = file.getSize();
-        logger.info("inputStream: " + inputStream);
-        logger.info("originalName: " + originalName);
-        logger.info("name: " + name);
-        logger.info("contentType: " + contentType);
-        logger.info("size: " + size);
-        // Do processing with uploaded file data in Service layer
-        return new ResponseEntity<String>(originalName, HttpStatus.OK);
-    }
     
+    private final String UPLOAD_FOLDER = "D:\\tools\\apache-tomcat-8.5.46\\webapps\\ROOT\\assets\\images\\cokhi\\";
+    private final String IMG_PATH = "http://localhost:8080/assets/images/cokhi/";
+    
+    private String uploadPath = "";
+    private String imgPath = "";
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadData(@RequestParam("file") MultipartFile file) throws Exception {
+    public ResponseEntity<ApiResp> uploadData(@RequestParam("file") MultipartFile file) throws Exception {
         logger.info("==============================POST upload file==================");
+        logger.info(this.uploadPath + "====================" + this.imgPath);
         if (file == null) {
             throw new RuntimeException("You must select the a file for uploading");
         }
@@ -59,9 +49,10 @@ public class UploadFileController {
         String contentType = file.getContentType();
         long size = file.getSize();
         
+        readConfiguration();
         // write file to the path ex: D:/
         byte[] bytes = file.getBytes();
-        Path path = Paths.get("D:/" + file.getOriginalFilename());
+        Path path = Paths.get(this.uploadPath + file.getOriginalFilename());
         Files.write(path, bytes);
         
         logger.info("inputStream: " + inputStream);
@@ -70,6 +61,29 @@ public class UploadFileController {
         logger.info("contentType: " + contentType);
         logger.info("size: " + size);
         // Do processing with uploaded file data in Service layer
-        return new ResponseEntity<String>(originalName, HttpStatus.OK);
+        ApiResp body = new ApiResp();
+        body.setData(this.imgPath + originalName);
+        
+        return new ResponseEntity<ApiResp>(body, HttpStatus.OK);
+    }
+    
+    public void readConfiguration() {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("cokhiconfig.txt"))) {
+            // read line by line
+            String line;
+            this.uploadPath = br.readLine().replace("\\", "/");
+            System.out.println("UploadFileController.readConfiguration()==========path: " + this.uploadPath);
+            this.imgPath = br.readLine().replace("\\", "/");;
+            int i = 0;
+            while ((line = br.readLine()) != null) {
+//                sb.append(line).append("\n");
+            }
+
+        } catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+        logger.info(this.uploadPath + "====================" + this.imgPath);
+        System.out.println("UploadFileController.readConfiguration()" + this.uploadPath + "====================" + this.imgPath);
     }
 }

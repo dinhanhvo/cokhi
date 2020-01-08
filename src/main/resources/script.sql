@@ -34,3 +34,18 @@ CREATE TABLE `items` (
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `product` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200),
+  `description` text(5000),
+  `imagepath` text(1000),
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `price` bigint,
+  `note` varchar(100),
+  `from` varchar(100),
+  `status` varchar(100),
+  `unit` varchar(100),
+  `type` varchar(100),
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

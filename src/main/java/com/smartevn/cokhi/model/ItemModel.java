@@ -13,25 +13,25 @@ import org.springframework.data.annotation.Id;
  */
 public class ItemModel {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue
-    private Long id;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "type")
-    private String type;
-
-    @Lob
-    @Column(name = "pic")
-    private byte[] pic;
-
-    // Custom Construtor
-    public ItemModel(String name, String type, byte[] pic) {
-        this.name = name;
-        this.type = type;
-        this.pic = pic;
-    }
+//    @Id
+//    @Column(name = "id")
+//    @GeneratedValue
+//    private Long id;
+//
+//    @Column(name = "name")
+//    private String name;
+//
+//    @Column(name = "type")
+//    private String type;
+//
+//    @Lob
+//    @Column(name = "pic")
+//    private byte[] pic;
+//
+//    // Custom Construtor
+//    public ItemModel(String name, String type, byte[] pic) {
+//        this.name = name;
+//        this.type = type;
+//        this.pic = pic;
+//    }
 }

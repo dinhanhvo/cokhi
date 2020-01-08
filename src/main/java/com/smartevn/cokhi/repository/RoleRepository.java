@@ -9,7 +9,9 @@ import com.smartevn.cokhi.model.RoleName;
 import java.util.Optional;
 
 /**
- * Created by rajeevkumarsingh on 02/08/17.
+ * 
+ * @author vadinh
+ *
  */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
