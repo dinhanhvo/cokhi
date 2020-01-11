@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,6 +81,22 @@ public class ProductController {
             System.out.println(imgModel.getProductId() + "ProductController.addProduct()======" + imgModel.getImgpath());
             this.imagesDetailService.AddImage(imgModel);
         }
+        return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
+    }
+    
+    @SuppressWarnings("unchecked")
+    @PutMapping("/product")
+    public ResponseEntity<ApiResp> editProduct(@Valid @RequestBody Product prod) {
+        ApiResp apiResp = new ApiResp();
+        System.out.println("ProductController.addProduct()========" + prod.getImagepath());
+        
+        Gson gson = new Gson();
+        ArrayList<String> imgs = gson.fromJson(prod.getImagepath(), ArrayList.class);
+        prod.setImagepath(imgs.get(0));
+        
+        Product pr = productService.editProduct(prod);
+        apiResp.setData(pr);
+        
         return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
     }
 }

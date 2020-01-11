@@ -77,6 +77,12 @@ public class ProductService {
         return pr;
     }
     
+    public Product editProduct(Product prod) {
+        System.out.println("ProductService.addProduct()===" + prod.getId());
+        Product pr = productRepository.save(prod);
+        return pr;
+    }
+    
     private void validatePageNumberAndSize(int page, int size) {
         if(page < 0) {
             throw new BadRequestException("Page number cannot be less than zero.");
