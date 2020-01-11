@@ -58,6 +58,7 @@ public class ProductController {
         return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
     }
     
+    @SuppressWarnings("unchecked")
     @PostMapping("/product")
     public ResponseEntity<ApiResp> addProduct(@Valid @RequestBody Product prod) {
         ApiResp apiResp = new ApiResp();
@@ -76,6 +77,7 @@ public class ProductController {
             imgModel.setImgpath(img);
             imgModel.setType(1);
             imgModel.setProductId(prod.getId());
+            System.out.println(imgModel.getProductId() + "ProductController.addProduct()======" + imgModel.getImgpath());
             this.imagesDetailService.AddImage(imgModel);
         }
         return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
