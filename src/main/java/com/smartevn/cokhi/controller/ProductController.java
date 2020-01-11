@@ -88,11 +88,7 @@ public class ProductController {
     @PutMapping("/product")
     public ResponseEntity<ApiResp> editProduct(@Valid @RequestBody Product prod) {
         ApiResp apiResp = new ApiResp();
-        System.out.println("ProductController.addProduct()========" + prod.getImagepath());
-        
-        Gson gson = new Gson();
-        ArrayList<String> imgs = gson.fromJson(prod.getImagepath(), ArrayList.class);
-        prod.setImagepath(imgs.get(0));
+        System.out.println("ProductController.editProduct()====getId====" + prod.getId());
         
         Product pr = productService.editProduct(prod);
         apiResp.setData(pr);
