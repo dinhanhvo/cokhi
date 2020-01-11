@@ -1,5 +1,6 @@
 package com.smartevn.cokhi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.smartevn.cokhi.model.ApiResp;
+import com.smartevn.cokhi.model.ImagesDetail;
 import com.smartevn.cokhi.model.Product;
 import com.smartevn.cokhi.payload.PagedResponse;
 import com.smartevn.cokhi.security.CurrentUser;
 import com.smartevn.cokhi.security.UserPrincipal;
+import com.smartevn.cokhi.service.ImagesDetailService;
 import com.smartevn.cokhi.service.ProductService;
 import com.smartevn.cokhi.util.AppConstants;
 
@@ -32,6 +36,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    
+    @Autowired
+    private ImagesDetailService imagesDetailService;
     
     @GetMapping("/product")
     public PagedResponse<Product> getAllProducts(@CurrentUser UserPrincipal currentUser,
@@ -55,8 +62,22 @@ public class ProductController {
     public ResponseEntity<ApiResp> addProduct(@Valid @RequestBody Product prod) {
         ApiResp apiResp = new ApiResp();
         System.out.println("ProductController.addProduct()========" + prod.getImagepath());
+        
+        Gson gson = new Gson();
+        ArrayList<String> imgs = gson.fromJson(prod.getImagepath(), ArrayList.class);
+        prod.setImagepath(imgs.get(0));
+        
         Product pr = productService.addProduct(prod);
         apiResp.setData(pr);
+        
+        for (String img: imgs) {
+            ImagesDetail imgModel = new ImagesDetail();
+            imgModel.setName(prod.getName());
+            imgModel.setImgpath(img);
+            imgModel.setType(1);
+            imgModel.setProductId(prod.getId());
+            this.imagesDetailService.AddImage(imgModel);
+        }
         return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
     }
 }

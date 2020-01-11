@@ -6,12 +6,13 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,34 +38,51 @@ public class UploadFileController {
     private String uploadPath = "";
     private String imgPath = "";
     @PostMapping("/upload")
-    public ResponseEntity<ApiResp> uploadData(@RequestParam("file") MultipartFile file) throws Exception {
+    public ResponseEntity<ApiResp> uploadData(@RequestParam("files") MultipartFile[] files) throws Exception {
         logger.info("==============================POST upload file==================");
         logger.info(this.uploadPath + "====================" + this.imgPath);
-        if (file == null) {
+        if (files == null) {
             throw new RuntimeException("You must select the a file for uploading");
         }
-        InputStream inputStream = file.getInputStream();
-        String originalName = file.getOriginalFilename();
-        String name = file.getName();
-        String contentType = file.getContentType();
-        long size = file.getSize();
-        
         readConfiguration();
-        // write file to the path ex: D:/
-        byte[] bytes = file.getBytes();
-        Path path = Paths.get(this.uploadPath + file.getOriginalFilename());
-        Files.write(path, bytes);
         
-        logger.info("inputStream: " + inputStream);
-        logger.info("originalName: " + originalName);
-        logger.info("name: " + name);
-        logger.info("contentType: " + contentType);
-        logger.info("size: " + size);
         // Do processing with uploaded file data in Service layer
         ApiResp body = new ApiResp();
-        body.setData(this.imgPath + originalName);
-        
+        List<String> imgS = new ArrayList<String>();
+        for (MultipartFile f: files) {
+            String iname = writeFile(f);
+            imgS.add(iname);
+        }
+//        body.setData(this.imgPath + originalName);
+        body.setData(imgS);
         return new ResponseEntity<ApiResp>(body, HttpStatus.OK);
+    }
+    
+    public String writeFile(MultipartFile file) {
+        InputStream inputStream;
+        String originalName = file.getOriginalFilename();
+        try {
+            inputStream = file.getInputStream();
+            String name = file.getName();
+            String contentType = file.getContentType();
+            long size = file.getSize();
+            
+         // write file to the path ex: D:/
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(this.uploadPath + originalName);
+            Files.write(path, bytes);
+            
+            logger.info("inputStream: " + inputStream);
+            logger.info("originalName: " + originalName);
+            logger.info("name: " + name);
+            logger.info("contentType: " + contentType);
+            logger.info("size: " + size);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        return this.imgPath + originalName;
     }
     
     public void readConfiguration() {
