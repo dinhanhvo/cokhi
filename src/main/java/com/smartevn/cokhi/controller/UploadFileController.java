@@ -71,7 +71,7 @@ public class UploadFileController {
         ApiResp body = new ApiResp();
         String iname = writeFile(file);
         System.out.println("UploadFileController.uploadData() === uploaded: " + iname);
-        body.setData(this.imgPath + iname);
+        body.setData(iname);
         return new ResponseEntity<ApiResp>(body, HttpStatus.OK);
     }
     
