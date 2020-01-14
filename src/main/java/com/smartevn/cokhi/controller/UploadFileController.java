@@ -51,10 +51,27 @@ public class UploadFileController {
         List<String> imgS = new ArrayList<String>();
         for (MultipartFile f: files) {
             String iname = writeFile(f);
+            System.out.println("UploadFileController.uploadData() === uploaded: " + iname);
             imgS.add(iname);
         }
 //        body.setData(this.imgPath + originalName);
         body.setData(imgS);
+        return new ResponseEntity<ApiResp>(body, HttpStatus.OK);
+    }
+    
+    @PostMapping("/uploadone")
+    public ResponseEntity<ApiResp> uploadData(@RequestParam("file") MultipartFile file) throws Exception {
+        logger.info("=================POST upload one file==================");
+        logger.info(this.uploadPath + "====================" + this.imgPath);
+        if (file == null) {
+            throw new RuntimeException("You must select the a file for uploading");
+        }
+        readConfiguration();
+        // Do processing with uploaded file data in Service layer
+        ApiResp body = new ApiResp();
+        String iname = writeFile(file);
+        System.out.println("UploadFileController.uploadData() === uploaded: " + iname);
+        body.setData(this.imgPath + iname);
         return new ResponseEntity<ApiResp>(body, HttpStatus.OK);
     }
     
