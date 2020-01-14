@@ -118,7 +118,9 @@ public class ProductController {
         System.out.println("ProductController.editProduct()====getId====" + prod.getId());
         
         Product pr = productService.editProduct(prod);
-        apiResp.setData(pr);
+//        apiResp.setData(pr);
+        List<Product> prs = productService.getProducts();
+        apiResp.setData(prs);
         
         return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
     }
