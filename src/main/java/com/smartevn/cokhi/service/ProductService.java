@@ -3,6 +3,7 @@ package com.smartevn.cokhi.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +72,20 @@ public class ProductService {
         return productRepository.findAll();
     }
     
+    public Optional<Product> getProduct(long id) {
+        return productRepository.findById(id);
+    }
+    
+    public List<Product> getProductByType(long type) {
+        System.out.println("ProductService.getProductByType()-------------" + type);
+        return productRepository.findByType(type);
+    }
+    
+    public List<Product> getProductByCategory(long id) {
+        System.out.println("ProductService.getProductByCategory()-------------" + id);
+        return productRepository.findByCategoryId(id);
+    }
+    
     public Product addProduct(Product prod) {
         System.out.println("ProductService.addProduct()===" + prod.getName());
         Product pr = productRepository.save(prod);
@@ -81,6 +96,10 @@ public class ProductService {
         System.out.println("ProductService.addProduct()===" + prod.getId());
         Product pr = productRepository.save(prod);
         return pr;
+    }
+    
+    public void deleteProduct(long id) {
+        productRepository.deleteById(id);
     }
     
     private void validatePageNumberAndSize(int page, int size) {

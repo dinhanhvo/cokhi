@@ -1,5 +1,6 @@
 package com.smartevn.cokhi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +16,11 @@ public class ImagesDetail {
     private Long id;
     
     private String name;
+    
+    @Column(name="`imgpath`")
     private String imgpath;
+    
+    @Column(name="product_id")
     private Long productId;
     private int type;
     public Long getId() {

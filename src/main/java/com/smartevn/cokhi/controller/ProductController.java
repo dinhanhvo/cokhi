@@ -2,15 +2,19 @@ package com.smartevn.cokhi.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +31,6 @@ import com.smartevn.cokhi.security.CurrentUser;
 import com.smartevn.cokhi.security.UserPrincipal;
 import com.smartevn.cokhi.service.ImagesDetailService;
 import com.smartevn.cokhi.service.ProductService;
-import com.smartevn.cokhi.util.AppConstants;
 
 @RestController
 @RequestMapping("/api")
@@ -41,14 +44,14 @@ public class ProductController {
     @Autowired
     private ImagesDetailService imagesDetailService;
     
-    @GetMapping("/product")
-    public PagedResponse<Product> getAllProducts(@CurrentUser UserPrincipal currentUser,
-            @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-            @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-        
-        logger.info("=======getAllProducts======page=="+page+"====size=="+size+"===========");
-        return productService.getAllProducts(currentUser, page, size);
-    }
+//    @GetMapping("/product")
+//    public PagedResponse<Product> getAllProducts(@CurrentUser UserPrincipal currentUser,
+//            @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+//            @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+//        
+//        logger.info("=======getAllProducts======page=="+page+"====size=="+size+"===========");
+//        return productService.getAllProducts(currentUser, page, size);
+//    }
     
     @GetMapping("/products")
     public ResponseEntity<ApiResp> getProducts(@CurrentUser UserPrincipal currentUser) {
@@ -56,6 +59,31 @@ public class ProductController {
         ApiResp apiResp = new ApiResp();
         List<Product> prs = productService.getProducts();
         apiResp.setData(prs);
+        return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
+    }
+    
+    @GetMapping("/products/category/{id}")
+    public ResponseEntity<ApiResp> getProductsByCategory(@PathVariable("id") int cateId) {
+        ApiResp apiResp = new ApiResp();
+        List<Product> prs = productService.getProductByCategory(cateId);
+        apiResp.setData(prs);
+        return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
+    }
+
+    @GetMapping("/products/type/{id}")
+    public ResponseEntity<ApiResp> getProductsByType(@PathVariable("id") int type) {
+        ApiResp apiResp = new ApiResp();
+        List<Product> prs = productService.getProductByType(type);
+        apiResp.setData(prs);
+        return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
+    }
+
+    @GetMapping("/product/{id}")
+    public ResponseEntity<ApiResp> getProduct(@PathVariable("id") long prId) {
+        System.out.println("ProductController.getProduct() id =====" + prId);
+        ApiResp apiResp = new ApiResp();
+        Optional<Product> pr = productService.getProduct(prId);
+        apiResp.setData(pr);
         return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
     }
     
@@ -79,12 +107,11 @@ public class ProductController {
             imgModel.setType(1);
             imgModel.setProductId(prod.getId());
             System.out.println(imgModel.getProductId() + "ProductController.addProduct()======" + imgModel.getImgpath());
-            this.imagesDetailService.AddImage(imgModel);
+            this.imagesDetailService.addImage(imgModel);
         }
         return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
     }
     
-    @SuppressWarnings("unchecked")
     @PutMapping("/product")
     public ResponseEntity<ApiResp> editProduct(@Valid @RequestBody Product prod) {
         ApiResp apiResp = new ApiResp();
@@ -93,6 +120,14 @@ public class ProductController {
         Product pr = productService.editProduct(prod);
         apiResp.setData(pr);
         
+        return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
+    }
+    
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<ApiResp> deleteCategory(@PathVariable("id") long id) {
+        ApiResp apiResp = new ApiResp();
+        
+        apiResp.setData("Deleted category "+id);
         return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
     }
 }

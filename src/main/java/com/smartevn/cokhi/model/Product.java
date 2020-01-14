@@ -2,7 +2,12 @@ package com.smartevn.cokhi.model;
 
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 
@@ -58,11 +63,20 @@ public class Product {
     @Column(name="`unit`")
     private String unit;
     
+    @Column(name="`categoryId`")
+    private int categoryId;
+    
     @Column(name="`type`")
     private int type;
     
-    @Column(name="`currencyId`")
+    @Column(name="currencyId")
     private int currencyId;
+    
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "images_detail",
+//        joinColumns = @JoinColumn(name = "type"),
+//        inverseJoinColumns = @JoinColumn(name = "id"))
+//    private List<ImagesDetail> imgs = new ArrayList<ImagesDetail>();
     
     public Long getId() {
         return id;
