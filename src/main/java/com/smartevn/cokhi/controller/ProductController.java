@@ -128,7 +128,7 @@ public class ProductController {
     @DeleteMapping("/product/{id}")
     public ResponseEntity<ApiResp> deleteCategory(@PathVariable("id") long id) {
         ApiResp apiResp = new ApiResp();
-        
+        productService.deleteProduct(id);
         apiResp.setData("Deleted category "+id);
         return new ResponseEntity<ApiResp>(apiResp, HttpStatus.OK);
     }

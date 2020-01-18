@@ -76,7 +76,7 @@ public class ProductService {
         return productRepository.findById(id);
     }
     
-    public List<Product> getProductByType(long type) {
+    public List<Product> getProductByType(int type) {
         System.out.println("ProductService.getProductByType()-------------" + type);
         return productRepository.findByType(type);
     }

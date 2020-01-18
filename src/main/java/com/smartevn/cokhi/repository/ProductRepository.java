@@ -10,6 +10,6 @@ import com.smartevn.cokhi.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    List<Product> findByType(long type);
+    List<Product> findByType(int type);
     List<Product> findByCategoryId(long id);
 }
