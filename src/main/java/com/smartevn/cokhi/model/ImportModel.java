@@ -20,7 +20,7 @@ public class ImportModel {
     private String description;
     private String imagepath;
     private long amount;
-    private Date imported_at;
+    private Date importedAt;
     private int user;
     private long product;
     public int getId() {
@@ -54,10 +54,10 @@ public class ImportModel {
         this.amount = amount;
     }
     public Date getImported_at() {
-        return imported_at;
+        return importedAt;
     }
     public void setImported_at(Date imported_at) {
-        this.imported_at = imported_at;
+        this.importedAt = imported_at;
     }
     public int getUser() {
         return user;

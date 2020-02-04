@@ -92,9 +92,12 @@ public class ProductController {
     public ResponseEntity<ApiResp> addProduct(@Valid @RequestBody Product prod) {
         ApiResp apiResp = new ApiResp();
         System.out.println("ProductController.addProduct()========" + prod.getImagepath());
-        
         Gson gson = new Gson();
         ArrayList<String> imgs = gson.fromJson(prod.getImagepath(), ArrayList.class);
+        if(imgs.size() == 0) {
+            apiResp.setData("Please Upload images");
+            return new ResponseEntity<ApiResp>(apiResp, HttpStatus.BAD_REQUEST);
+        }
         prod.setImagepath(imgs.get(0));
         
         Product pr = productService.addProduct(prod);
